@@ -1,0 +1,56 @@
+<!doctype html> 
+<!--[if lte IE 7]> <html class="ie7"> <![endif]-->  
+<!--[if IE 8]>     <html class="ie8"> <![endif]-->  
+<!--[if IE 9]>     <html class="ie9"> <![endif]-->  
+<!--[if !IE]><!--> <html lang="en"><!--<![endif]-->
+<head>
+	<title>JQUERY AJAX CONTENT</title>
+	<link rel="stylesheet" type="text/css" href="style.css"></link>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<script type="text/javascript">
+		$(
+			function(){
+				var content = $( "#content" );
+				$( "a" ).click(
+					function( objEvent ){
+						var clink = $( this );
+						// clear console
+						$( "#console" ).empty();
+						$.ajax(
+							{
+								// getting the content
+								url: clink.attr( "href" ),
+								type: "get",
+								dataType: "html",
+								error: function(){
+									ShowStatus( "ERROR 404" );
+								},
+								beforeSend: function(){},
+								complete: function(){},
+								success: function( strData ){									
+									content.html( strData );
+								}
+							}							
+							);
+						// prevent default click
+						return( false );					
+					}
+					);
+			}
+			);
+		function ShowStatus( strStatus ){
+			var status = $( "#console" );
+			status.prepend( "<quote>" + strStatus + "</quote>" );
+		};
+	</script>
+</head>
+<body>
+	<nav>
+		<a href="content_a.html">Content A</a> 
+		<a href="content_b.html">Content B</a> 
+		<a href="content_c.html">Content C</a> 
+	</nav>
+	<div id="content"></div>	
+	<div id="console"></div>			
+</body>
+</html>
